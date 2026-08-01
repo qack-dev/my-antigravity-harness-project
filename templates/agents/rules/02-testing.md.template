@@ -1,0 +1,21 @@
+---
+name: testing
+description: テストフレームワークとモック方針に関する制約
+trigger: glob
+glob: "[要確認: テストファイルのglobパターン。例: **/*.test.ts]"
+---
+<!-- [要確認: frontmatterのキー名(trigger, glob等)は導入するAntigravity CLIのバージョンで確認してください] -->
+
+# Testing Rules
+
+## 1. テストフレームワーク
+
+[要確認: プロジェクトで使用するテストフレームワークを記載してください]
+
+## 2. モックの多用禁止
+
+- DBや外部API通信以外の内部ロジックは、モックを使用せず統合的なテスト(Integration Test)を書くこと。
+
+## 3. 自己検証ループ
+
+- テストが失敗した際は、`.agents/skills/verify/SKILL.md` が実行するコマンドの標準エラー出力をコンテキストに取り込み、元のコードを修正して再実行してください。

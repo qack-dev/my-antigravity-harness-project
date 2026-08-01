@@ -1,0 +1,16 @@
+{
+  "name": "my-antigravity-harness-project",
+  "version": "0.1.0",
+  "private": true,
+  "description": "どんなプロジェクトでも最小限の質問で自走的に完遂できるようにする、Google Antigravity CLI (agy) 向け汎用ハーネステンプレート集",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "lint": "npx markdownlint-cli2 \"**/*.md\" \"#node_modules\"",
+    "test": "node tests/validate-templates.mjs",
+    "verify": "npm run lint && npm test"
+  },
+  "license": "MIT"
+}

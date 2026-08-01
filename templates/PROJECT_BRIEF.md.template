@@ -1,0 +1,57 @@
+# PROJECT_BRIEF
+
+このファイルは、新規プロジェクトへハーネス(`AGENTS.md`・`docs/`・`.agents/`)を生成するための記入用紙です。
+AIと対話する前に、分かる範囲で**人の手で**記入してください。分からない項目は空欄のままで構いません。
+
+記入後、このプロジェクトで `agy`(Antigravity CLI)を起動し `/init` と入力すると、このファイルの内容をもとに
+`AGENTS.md` / `docs/PRD.md` / `docs/ARCHITECTURE.md` / `docs/TASKS.md` / `docs/adr/0001-....md` /
+`.agents/rules/*.md` / `.agents/workflows/{plan,verify,commit}.md` / `.agents/skills/verify/SKILL.md` /
+`.agents/agents/*/agent.md` / `.agents/hooks.json` が生成されます。空欄の項目や、記入されていても内容が
+曖昧・矛盾していると判断された項目については、生成前にAIが対話で確認します。
+
+## プロジェクト名(リポジトリ名)
+
+(例: my-task-tracker)
+
+## プロジェクトの目的
+
+このプロジェクトは何を解決し、誰の何を便利にしますか?(1〜3文)
+
+(例: 個人開発者が複数プロジェクトのTODOを1画面で横断管理できるようにする。)
+
+## 技術スタック
+
+言語・フレームワーク・ランタイムのバージョンを記載してください。わからない場合は空欄のままにし、AIに候補を提示してもらってください。
+
+(例: Node.js 20 + TypeScript 5 + Express)
+
+## 主要機能
+
+3〜7個、箇条書きで記載してください。
+
+(例)
+- タスクの追加/完了/削除
+- 期限によるソート
+- CSVエクスポート
+
+## 想定ユーザー
+
+このプロジェクトを使うのは誰ですか?
+
+(例: 個人開発者(自分自身))
+
+## GitHubアカウント
+
+リポジトリURL生成に使用します。
+
+(例: your-github-id)
+
+## 公開範囲
+
+public / private のどちらですか?
+
+(例: private)
+
+## ライセンス
+
+(例: MIT / Apache-2.0 / 非公開 など)

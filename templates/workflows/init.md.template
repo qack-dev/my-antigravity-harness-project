@@ -1,0 +1,31 @@
+<!--
+  初回セットアップ(マシンごとに1回だけ):
+  1. このファイルをAntigravity CLIのグローバルワークフロー用ディレクトリへ `init.md` としてコピーする
+     ([要確認: 正確なパスはドキュメント間で表記が揺れています。README.mdの「初回セットアップ」を参照し、
+     お使いのバージョンのagyで実際のパスを確認してください。確認できない場合は、新規プロジェクトごとに
+     このファイルを `.agents/workflows/init.md` としてコピーする代替手段を使ってください)
+  2. 下記の [要確認: ...] を、このハーネスリポジトリを実際にcloneしたローカルパスに書き換える
+  以後、どの新規プロジェクトでも `/init` が使えるようになる(グローバルセットアップが有効な場合)。
+-->
+
+ハーネスリポジトリのローカルパス: [要確認: このリポジトリをcloneしたローカルパスに書き換えてください]
+
+対象プロジェクトのルートにある `PROJECT_BRIEF.md` をもとに、`AGENTS.md` / `docs/*.md` / `.agents/*` を生成する。
+
+1. 上記の「ハーネスリポジトリのローカルパス」が `[要確認: ...]` のままなら、初回セットアップが未完了なのでその旨をユーザーに伝えて中断する
+2. 対象プロジェクトのルートに `PROJECT_BRIEF.md` が無ければ、ハーネスリポジトリの `templates/PROJECT_BRIEF.md.template` をコピーして記入するようユーザーに案内し、中断する
+3. `PROJECT_BRIEF.md` を読み、`PROJECT_NAME` / `PROJECT_PURPOSE` / `TECH_STACK` / `MAIN_FEATURES` / `TARGET_USERS` / `GITHUB_ACCOUNT` / `VISIBILITY` / `LICENSE` の8項目それぞれについて、次のいずれかに該当するものを洗い出す
+   - 空欄(未記入)
+   - 記入されているが、曖昧・矛盾・情報不足で、そのままテンプレートに埋めると`AGENTS.md`や`docs/`の内容が不正確・実行不能になると判断されるもの
+4. 3で洗い出した項目だけを対話でユーザーに確認する(揃っている項目に無駄な質問はしない)。ユーザーが「おまかせ」と答えた項目は、`PROJECT_PURPOSE`から判断した推奨値を根拠1行とともに提案してから次へ進む
+5. 全項目が揃ったら、「ハーネスリポジトリのローカルパス」配下の `templates/AGENTS.md.template` / `templates/docs/*.template` / `templates/agents/**/*.template` を読み込み、各ファイル内のプレースホルダ(`questions.json`のキー名を`{{ }}`で囲んだ形式)を確定した回答で置換する
+6. 置換結果を、対象プロジェクトの以下のパスとして保存する(`templates/agents/`配下は、拡張子`.template`を取り除いた上で、同じディレクトリ構造のまま`.agents/`配下へコピーする)
+   - `AGENTS.md`
+   - `docs/PRD.md` / `docs/ARCHITECTURE.md` / `docs/TASKS.md` / `docs/adr/0001-record-architecture-decisions.md`
+   - `.agents/rules/01-architecture.md` / `.agents/rules/02-testing.md`
+   - `.agents/workflows/plan.md` / `.agents/workflows/verify.md` / `.agents/workflows/commit.md`
+   - `.agents/skills/verify/SKILL.md`
+   - `.agents/agents/tdd-engineer/agent.md` / `.agents/agents/code-reviewer/agent.md`
+   - `.agents/hooks.json` / `.agents/hooks/deny-destructive-commands.sh`(コピー後、実行権限を付与するようユーザーに案内する)
+7. 対象プロジェクトのルートに既存の `LICENSE` / `README.md` があれば、削除してよいかユーザーに確認したうえで削除する(本ハーネスはこれらを生成・管理しないため、リポジトリ作成時の初期雛形が新しく生成した`AGENTS.md`/`docs/`と食い違ったまま残ってしまうのを防ぐ)。ユーザーが実質的な内容(実際のプロジェクト説明や独自のライセンス文面)を書き込んでいると判断される場合は削除せず、その旨を伝えて判断を委ねる
+8. 生成したファイルの一覧、削除したファイル(あれば)、残っている `[要確認: 内容]` 箇所(テンプレート側で機械的に埋められない部分。特に`.agents/hooks.json`まわりのAntigravity CLI仕様の`[要確認]`は導入時に必ず解消するようユーザーに案内する)を報告する

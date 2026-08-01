@@ -1,0 +1,11 @@
+{
+  // markdownlint-cli2 の設定。詳細ルール一覧は以下を参照:
+  // https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
+  "default": true,
+  // テンプレート説明やコマンド例で長い行が発生するため無効化
+  "MD013": false,
+  // テンプレート内でHTMLタグ(<br>等)を使う可能性があるため無効化
+  "MD033": false,
+  // .template ファイルは先頭がプレースホルダになる場合があるため無効化
+  "MD041": false
+}

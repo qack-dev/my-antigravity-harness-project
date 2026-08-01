@@ -1,0 +1,17 @@
+{
+  "_comment": "[要確認: このファイルのキー名・入出力契約はAntigravity CLIの公式ドキュメント間でも表記が揺れており、実機での動作確認ができていません。導入時に必ずお使いのバージョンで確認してください]",
+  "guardrails": {
+    "enabled": true,
+    "PreToolUse": [
+      {
+        "matcher": "command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./.agents/hooks/deny-destructive-commands.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

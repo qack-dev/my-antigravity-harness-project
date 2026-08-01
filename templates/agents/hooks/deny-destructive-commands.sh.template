@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# PreToolUse フック: 破壊的なコマンドをエージェントが実行する前に機械的にブロックする。
+#
+# [要確認] 本スクリプトはベストエフォート実装です。Antigravity CLIのHooks入出力契約
+# (stdinで渡されるJSONの正確なフィールド名、stdoutで返す decision の正確な値)は、
+# 導入時にお使いのバージョンの公式ドキュメントまたは `agy inspect` で確認してください。
+# 併用として ~/.gemini/antigravity-cli/settings.json 側の Deny ルールも設定することを推奨します。
+
+set -euo pipefail
+
+INPUT="$(cat)"
+
+DENY_PATTERNS='rm -rf /|rm -rf ~|git push .*--force|git push .*-f |git reset --hard|git clean -fd|DROP TABLE|DROP DATABASE'
+
+if echo "${INPUT}" | grep -Eiq "${DENY_PATTERNS}"; then
+  printf '{"decision":"deny","reason":"破壊的なコマンドが検出されたため自動的にブロックしました(.agents/hooks/deny-destructive-commands.sh)。ユーザーの明示的な承認を得てから、手動で実行してください。"}\n'
+  exit 0
+fi
+
+printf '{"decision":"allow"}\n'
+exit 0
