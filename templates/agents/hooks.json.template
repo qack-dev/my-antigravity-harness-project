@@ -1,10 +1,10 @@
 {
-  "_comment": "[要確認: このファイルのキー名・入出力契約はAntigravity CLIの公式ドキュメント間でも表記が揺れており、実機での動作確認ができていません。導入時に必ずお使いのバージョンで確認してください]",
+  "_comment": "matcherはツール名'run_command'に一致させる必要がある(2026-08時点で複数の情報源が一致。旧'command'は誤りだったため修正済み)。commandは相対パスだとagyの起動ディレクトリ次第でexit 127になり無音でガードレールが機能しなくなることが報告されている(docs/adr/0003参照)。実機でのdecision契約の最終確認は未了のため[要確認]が残る",
   "guardrails": {
     "enabled": true,
     "PreToolUse": [
       {
-        "matcher": "command",
+        "matcher": "run_command",
         "hooks": [
           {
             "type": "command",

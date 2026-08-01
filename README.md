@@ -18,7 +18,7 @@
 Antigravity CLIのガードレール設定(`settings.json`)は `~/.gemini/antigravity-cli/settings.json` というユーザーのホームディレクトリ配下(マシングローバル)に置かれ、リポジトリに同梱しても自動適用されません。そのため本テンプレートでは、リポジトリに同梱できる `.agents/hooks.json`(Hooks機構)で破壊的コマンドを`deny`する方式を採用しています(詳細: [docs/adr/0003](docs/adr/0003-guardrails-via-workspace-hooks-not-global-settings.md))。
 
 > [!WARNING]
-> Hooksの入出力契約は情報源によって表記が揺れており、実機での完全な動作確認ができていません。`.agents/hooks/deny-destructive-commands.sh` はベストエフォートの実装です。安全性が重要な場面では、導入時に `agy inspect` や公式ドキュメントで実際の契約を確認し、`~/.gemini/antigravity-cli/settings.json` 側の `Deny` ルールも併用してください。
+> Hooksの入出力契約は情報源によって表記が揺れており、実機での完全な動作確認ができていません。`.agents/hooks/deny-destructive-commands.sh` はベストエフォートの実装です。2026-08-02の再調査で、`matcher`の値が実際のツール名(`run_command`)と一致していない不具合を発見し修正済みですが、同種の不整合が残っている可能性は否定できません。また、`.agents/hooks.json`の`command`は相対パス指定のため、**`agy`を必ずワークスペースルートから起動してください**(サブディレクトリから起動すると`exit 127`でフックが無音失敗し、ガードレールがバイパスされることが報告されています)。安全性が重要な場面では、導入時に `agy inspect` や公式ドキュメントで実際の契約を確認し、`~/.gemini/antigravity-cli/settings.json` 側の `Deny` ルールも併用してください。
 
 ## 主な機能
 
@@ -77,7 +77,7 @@ Antigravity CLIのガードレール設定(`settings.json`)は `~/.gemini/antigr
 | `/init` を実行しても「初回セットアップが未完了」と言われる | ユーザースコープの`init.md`内の「ハーネスリポジトリのローカルパス」が`[要確認: ...]`のままです。「初回セットアップ」の手順3を実施してください |
 | `/init` を実行しても `PROJECT_BRIEF.md` が見つからないと言われる | 新規プロジェクトのルートに `PROJECT_BRIEF.md` がありません。`templates/PROJECT_BRIEF.md.template` をコピーして配置してください |
 | `/init` というスラッシュコマンドが見つからない | グローバルワークフローの配置場所を間違えている可能性があります。「代替手段」(プロジェクトごとに`.agents/workflows/init.md`をコピーする方法)を試してください |
-| `.agents/hooks.json` を置いても危険なコマンドが実行されてしまう | Hooksの入出力契約はドキュメント間で表記揺れがあり、本テンプレートの実装がお使いのバージョンと一致していない可能性があります。上記「ガードレールについての重要な注意」を参照し、`~/.gemini/antigravity-cli/settings.json` 側のDenyルールも併用してください |
+| `.agents/hooks.json` を置いても危険なコマンドが実行されてしまう | まず `agy` をワークスペースルートから起動しているか確認してください(サブディレクトリから起動すると相対パス指定のフックが無音失敗します)。それでも機能しない場合、Hooksの入出力契約がお使いのバージョンと一致していない可能性があります。上記「ガードレールについての重要な注意」を参照し、`~/.gemini/antigravity-cli/settings.json` 側のDenyルールも併用してください |
 
 本リポジトリ自体の開発に関するトラブルシューティングは [CONTRIBUTING.md](CONTRIBUTING.md) を参照してください。
 

@@ -13,14 +13,17 @@ AIエージェントは着手前に必ずこのファイルを読み、着手す
   - 完了条件: 適当なダミープロジェクトに対して`templates/questions.json`の質問に回答し、`templates/*.template`から実際に`AGENTS.md`/`docs/*.md`/`.agents/*`を生成できることを1回通しで確認する。あわせて`/init`ワークフローが実機で起動することを確認する
 - [ ] グローバルワークフローの正確な配置パスを確定する
   - 完了条件: `agy`の公式ドキュメントまたは実機検証で正しいパスを確認し、`README.md`・`templates/workflows/init.md.template`の`[要確認]`を解消する
-- [ ] `.agents/hooks.json` の入出力契約を実機で検証する
-  - 完了条件: PreToolUseフックのstdin/stdoutの正確なJSONフィールド名を確認し、`.agents/hooks/deny-destructive-commands.sh`(および`templates/agents/hooks/`配下)を実際の契約に合わせて修正する。動作確認として、実際に破壊的コマンドがdenyされることを確認する
+  - 2026-08-02時点の状況: `~/.gemini/antigravity/global_workflows/`という記載を独立した2件のコミュニティ記事で確認したが、`antigravity.google/docs/ide/workflows`の直接fetchでは言及がなく一次情報源での裏付けは未了(詳細: `docs/adr/0004`の追記)
+- [ ] `.agents/hooks.json` の入出力契約・`command`の絶対パス化を実機で検証する
+  - 完了条件: PreToolUseフックのstdin/stdoutの正確なJSONフィールド名を確認し、`.agents/hooks/deny-destructive-commands.sh`(および`templates/agents/hooks/`配下)を実際の契約に合わせて修正する。動作確認として、実際に破壊的コマンドがdenyされることを確認する。あわせて、`command`を相対パスのまま運用してよいか(`agy`の起動ディレクトリ次第でexit 127になる問題への恒久対応)を実機で確認し、環境変数展開(`$GEMINI_PROJECT_DIR`等)や生成時の絶対パス埋め込みなど具体的な解決策を決定する
+  - 2026-08-02時点の状況: `matcher`の値が誤り(`"command"`→`"run_command"`)だった不具合を発見し修正済み。`command`の絶対パス化は根拠不足のため見送り、運用上の注意喚起(ワークスペースルートから起動)にとどめている(詳細: `docs/adr/0003`の追記)
 - [ ] オフライン環境向けに`markdownlint-cli2`を`devDependencies`として固定インストールする方式へ切り替えるか判断する
   - 完了条件: 判断結果を`docs/adr/`に新規ADRとして記録する(現状維持の場合もその理由を記録する)
 - [ ] Antigravityの Plugin機構(`agy plugin install`)がWorkflowsのバンドルに対応しているか調査する
   - 完了条件: 対応していると確認できれば、配布方式をローカルパス参照からプラグイン配布へ移行するADRを作成する。対応していない、または確認できなければ、その旨を記録し現状維持とする
 - [ ] `AGENTS.md`と`~/.gemini/GEMINI.md`(グローバルルール)が両方存在する場合の優先順位を確認する
   - 完了条件: 公式ドキュメントまたは実機検証で優先順位を確認し、`docs/ARCHITECTURE.md`の「既知の制約」にある該当`[要確認]`を解消する
+  - 参考: `github.com/google-gemini/gemini-cli` issue #16058 が、AntigravityとGemini CLIが同じ`~/.gemini/GEMINI.md`に書き込み合い設定が混在するという関連問題を報告している(優先順位そのものへの直接的な言及はない)
 
 ## 完了
 

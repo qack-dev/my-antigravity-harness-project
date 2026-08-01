@@ -26,3 +26,14 @@ Antigravity CLIはリリースから間もない製品であり、ドキュメ�
 
 - 本リポジトリの一部のドキュメント(特に`.agents/hooks.json`まわり、グローバルWorkflowsのパス)には`[要確認]`が残った状態でpublishされる。これは本リポジトリの品質を落とすためではなく、誤った断定を避けるための意図的な選択である
 - `[要確認]`を解消するPRを歓迎する(`CONTRIBUTING.md`参照)。解消する際は、根拠となった一次情報源(URL、確認日、確認したAntigravity CLIのバージョン)をコミットメッセージまたはADRに残すこと
+
+## 追記(2026-08-02): wide/deep searchによる再調査結果
+
+コンテキストで列挙した項目について、追加調査(公式ドキュメント`antigravity.google/docs/`各ページの再取得、および複数の独立したコミュニティ記事の突き合わせ)を行った結果は以下の通り。
+
+- **Rulesのワークスペーススコープ**: `antigravity.google/docs/cli/plugins`(公式)で「Create a directory named `.agents/skills/`」、およびプラグイン内ディレクトリ構造として`rules/`(複数形)が明記されていることを確認した。`.agents/rules`(複数形)を正、`.agent/rules`(単数形)を後方互換として扱う整理は、複数のコミュニティ記事とも整合するため、断定形に格上げしてよいと判断する
+- **Skillsのグローバルスコープ**: 依然として情報源間で不一致(`antigravity.google/docs/cli/plugins`のfetchでは`~/.gemini/antigravity-cli/skills/`、`antigravity.google/docs/hooks`のfetchでは(hooksの文脈だが)`~/.gemini/config/`という別系統のパスが示唆された)。一次情報源同士でも表記揺れが残るため、`[要確認]`のまま維持する
+- **グローバルWorkflowsの保存先**: `~/.gemini/antigravity/global_workflows/`という記載を、独立した2件のコミュニティ記事(検索結果の要約経由)で確認した。ただし`antigravity.google/docs/ide/workflows`の直接fetchでは保存先パスへの言及自体がなく、一次情報源での裏付けは取れていない。確信度は上がったが、本ADRの方針(一次情報源で確認できたもののみ断定)に従い`[要確認]`のまま維持し、候補パスとして明記するにとどめる
+- **Hooksの入出力契約**: `antigravity.google/docs/hooks`(公式)で、イベント種別(PreToolUse/PostToolUse/PreInvocation/PostInvocation/Stop)、`decision`の値(`allow`/`deny`/`ask`/`force_ask`)、共通stdinフィールド(`conversationId`/`workspacePaths`/`transcriptPath`/`artifactDirectoryPath`)を確認できた。ツール呼び出しの詳細(`toolCall.name`/`toolCall.args.CommandLine`)は公式ページの要約には現れなかったが、独立した複数のコミュニティ記事が同一のJSON構造を示しており、実装上の参考値として採用した(詳細は`docs/adr/0003`の追記を参照)。この過程で、本リポジトリの`.agents/hooks.json`の`matcher`値が実際のツール名(`run_command`)と一致していない不具合が見つかり修正した
+
+一次情報源のみで確定できない項目が依然として残るのは、Antigravity CLIがリリース後も継続的にドキュメントを更新している段階の製品であるためであり、本ADRが想定していた状況そのものである。今後も定期的な再調査を`docs/TASKS.md`に記録する。

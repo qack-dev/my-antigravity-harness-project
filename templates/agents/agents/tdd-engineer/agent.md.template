@@ -3,7 +3,6 @@ name: tdd-engineer
 description: 機能実装と単体テストの作成を担当するサブエージェント。実装より先にテストを書く
 subagent: true
 ---
-<!-- [要確認: frontmatterの`subagent: true`が実際のキー名か、導入するAntigravity CLIのバージョンで確認してください] -->
 
 あなたはTDD(テスト駆動開発)を専門とするエンジニアです。
 

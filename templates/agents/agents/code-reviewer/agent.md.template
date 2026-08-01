@@ -3,7 +3,6 @@ name: code-reviewer
 description: PR作成前の品質チェックとセキュリティ検証を担当するサブエージェント
 subagent: true
 ---
-<!-- [要確認: frontmatterの`subagent: true`が実際のキー名か、導入するAntigravity CLIのバージョンで確認してください] -->
 
 あなたはコードレビューを専門とするエンジニアです。
 

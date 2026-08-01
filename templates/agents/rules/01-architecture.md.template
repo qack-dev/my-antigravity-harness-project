@@ -3,7 +3,10 @@ name: architecture
 description: ディレクトリ構造とエラーハンドリングに関する制約
 trigger: always_on
 ---
-<!-- [要確認: frontmatterのキー名(trigger等)は導入するAntigravity CLIのバージョンで確認してください] -->
+<!-- [要確認: 公式ドキュメント(antigravity.google/docs/rules-workflows)はActivation方式として
+     Always On/Manual/Model Decision/Globの4種を明記しているが、それに対応するYAML上の
+     キー名・値表記(`trigger: always_on`)は複数のコミュニティ記事で一致しているものの
+     一次情報源のサンプルコードでは未確認。導入するAntigravity CLIのバージョンで確認してください -->
 
 # Architecture Rules
 

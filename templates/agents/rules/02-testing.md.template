@@ -4,7 +4,10 @@ description: テストフレームワークとモック方針に関する制約
 trigger: glob
 glob: "[要確認: テストファイルのglobパターン。例: **/*.test.ts]"
 ---
-<!-- [要確認: frontmatterのキー名(trigger, glob等)は導入するAntigravity CLIのバージョンで確認してください] -->
+<!-- [要確認: frontmatterのキー名(trigger, glob等)は導入するAntigravity CLIのバージョンで確認してください。
+     特に、glob指定用のフィールド名は単数形`glob`(本テンプレートの現状)か複数形`globs`(リスト形式)かが
+     情報源間で確定できていない。複数パターンを指定したい場合は、まずお使いのバージョンで
+     `glob: "a"` と `globs: ["a","b"]` のどちらが実際に効くかを確認してから追記すること -->
 
 # Testing Rules
 
