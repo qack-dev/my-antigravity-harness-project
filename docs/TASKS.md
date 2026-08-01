@@ -19,6 +19,8 @@ AIエージェントは着手前に必ずこのファイルを読み、着手す
   - 完了条件: 判断結果を`docs/adr/`に新規ADRとして記録する(現状維持の場合もその理由を記録する)
 - [ ] Antigravityの Plugin機構(`agy plugin install`)がWorkflowsのバンドルに対応しているか調査する
   - 完了条件: 対応していると確認できれば、配布方式をローカルパス参照からプラグイン配布へ移行するADRを作成する。対応していない、または確認できなければ、その旨を記録し現状維持とする
+- [ ] `AGENTS.md`と`~/.gemini/GEMINI.md`(グローバルルール)が両方存在する場合の優先順位を確認する
+  - 完了条件: 公式ドキュメントまたは実機検証で優先順位を確認し、`docs/ARCHITECTURE.md`の「既知の制約」にある該当`[要確認]`を解消する
 
 ## 完了
 
@@ -30,6 +32,10 @@ AIエージェントは着手前に必ずこのファイルを読み、着手す
   - 完了条件: `docs/PRD.md`・`docs/ARCHITECTURE.md`にAntigravity CLI固有の設計判断(生成器パターン、hooksによるガードレール、`[要確認]`方針)が記載されている
 - [x] `npm run verify`(lint + test)が通ることを確認し、Node.jsの動作確認済みバージョンを記載
   - 完了条件: Windows + Node.js v22.15.0で`npm run lint`・`npm test`がいずれも成功することを確認し、`AGENTS.md`・`README.md`・`docs/PRD.md`・`package.json`(`engines`フィールド)の該当`[要確認]`を解消した
+- [x] Antigravity CLIがワークスペースルートの`AGENTS.md`を`GEMINI.md`と同等に自動解析するかを確認する
+  - 完了条件: 公式ドキュメント(`antigravity.google/docs/cli/best-practices`)に「Create a `GEMINI.md` or `AGENTS.md` file at your workspace root」との記載があることを確認し、根拠を`docs/ARCHITECTURE.md`の「主要な設計判断」に追記した。ただし両ファイルが同時に存在する場合の優先順位は未確認のため別タスクとして残す
+- [x] `README.md`を「リポジトリの使い方」のみに絞り、構造(`docs/ARCHITECTURE.md`)・開発方法(`CONTRIBUTING.md`)を分離
+  - 完了条件: README.mdから「ハーネスの6層」表・姉妹リポジトリ比較表・プロジェクト構成ツリー・動作要件/クイックスタート/開発コマンドを移設し、リンクで参照する構造にした
 
 ## スコープ外(やらないこと)
 
